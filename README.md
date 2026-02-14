@@ -1,34 +1,58 @@
-# kiro-setup-ubuntu
+# 🚀 Kiro Setup on Ubuntu (Step-by-Step Copyable Guide)
 
-📺 Watch the Video: Click here to watch the full step-by-step tutorial
+---
 
+## 📺 Video Tutorial
 
-🎁 Phase 1: Get Your Free Kiro Credits
-Step 1: Download Kiro IDE
-Visit kiro.dev and download the application for your platform.
+Watch the full step-by-step tutorial (add your video link here).
 
-Step 2: Sign Up & Login
-Open Kiro IDE
-Create a new account or sign in
-✨ You'll automatically receive 500 free credits!
-⚠️ Important: Keep Kiro IDE logged in throughout this setup process.
+---
 
-Linux / Ubuntu (Bash)
-Before starting the Kiro Gateway server, set the required environment variables in your terminal:
+# 🎁 Phase 1: Get Your Free Kiro Credits
 
-# Set the path to your Kiro credentials JSON file
+## Step 1: Download Kiro IDE
+
+* Visit: [https://kiro.dev](https://kiro.dev)
+* Download for your platform
+
+## Step 2: Sign Up & Login
+
+1. Open Kiro IDE
+2. Create a new account or sign in
+
+✨ You’ll automatically receive **500 free credits**
+
+⚠️ Important: Keep Kiro IDE logged in during the entire setup.
+
+---
+
+# 🐧 Linux / Ubuntu Setup
+
+Before starting the Kiro Gateway server, set environment variables.
+
+## Step 1: Set Environment Variables (Temporary)
+
+```bash
+# Path to Kiro credentials
 export KIRO_CREDS_FILE=~/.aws/sso/cache/kiro-auth-token.json
 
-# Set your super-secret proxy API key
+# Your proxy API key
 export PROXY_API_KEY=my-super-secret-password-123
+```
 
-⚠ Note: These export commands only last for the current terminal session. To make them permanent, you can add them to your ~/.bashrc or ~/.zshrc.
+⚠️ These only work for the current terminal session.
+To make permanent, add them to:
 
-tep 2: Create Configuration File
-For Linux(ubuntu) users:
-Open the ubuntu terminal.
+* ~/.bashrc
+* ~/.zshrc
 
-Create or edit the file at: ~/.claude-code-router/config.json by paste the following configuration:
+---
+
+# ⚙️ Step 2: Create Claude Router Config
+
+## Create config file:
+
+```bash
 cat > ~/.claude-code-router/config.json << 'EOF'
 {
   "LOG": true,
@@ -57,59 +81,146 @@ cat > ~/.claude-code-router/config.json << 'EOF'
   }
 }
 EOF
-Note: Ensure the api_key matches the PROXY_API_KEY you set in Phase 2. The model name claude-sonnet-4-5 corresponds to the models provided by the Kiro Gateway.
+```
 
-Phase 3: Set Up Claude Code Router
-The Claude Code Router wraps the official Claude CLI and redirects requests to your local Kiro gateway.
+📌 Make sure:
 
-Step 1: Install Required Packages
+* api_key matches PROXY_API_KEY
+* Model names are correct
+
+---
+
+# 🔁 Phase 3: Install Claude Code Router
+
+## Step 1: Install Required Packages
+
+```bash
 npm install -g @anthropic-ai/claude-code
 npm install -g @musistudio/claude-code-router
+```
 
+---
+
+# 📦 Clone Kiro Gateway
+
+```bash
 rm -rf kiro-openai-gateway
 
 git clone https://github.com/Jwadow/kiro-openai-gateway.git
 
 cd kiro-openai-gateway
+```
 
+---
+
+# 🐍 Install Python Requirements
+
+```bash
 pip3 install -r requirements.txt
+```
 
-ya ye
+If error occurs:
 
+```bash
 pip3 install -r requirements.txt --break-system-packages
+```
 
+---
+
+# 🔐 Setup .env File
+
+```bash
 cp .env.example .env
-
 nano .env
+```
 
+Uncomment this line inside `.env`:
 
-# KIRO_CREDS_FILE="~/.aws/sso/cache/kiro-auth-token.json" uncomment this line in .env file.
+```
+KIRO_CREDS_FILE="~/.aws/sso/cache/kiro-auth-token.json"
+```
 
-Note: Open the terminal on this directory kiro-openai-gateway where we have all the kiro code base and run this command python main.py.If the server is successfully running so it's means that your .env file is loaded successfully and you don't need to implement step Step 5: Setup Variables to set this 2 environment variable manually KIRO_CREDS_FILE and PROXY_API_KEY.
-Step 6: Start the Gateway Server
+---
+
+# ▶️ Run Gateway Server
+
+Run inside the project directory:
+
+```bash
 python3 main.py
+```
 
+If successful, you should see:
 
-
-Success Indicator: You should see:
-
+```
 Server running at http://localhost:8000
-📌 Note: To check if the gateway is running, open your browser and go to:
+```
 
+---
+
+# 🌐 Verify Server in Browser
+
+Open:
+
+```
 http://localhost:8000
+```
 
-You should not use 0.0.0.0 in the browser, as it is only a server binding address.
+---
 
-This site can’t be reached
-The webpage at http://0.0.0.0:8000/ might be temporarily down or it may have moved permanently to a new web address.
+# ❌ If You See 0.0.0.0 Error
+
+Browser error example:
+
+```
+http://0.0.0.0:8000
 ERR_ADDRESS_INVALID
-You should convert this http://0.0.0.0:8000 url into your localhost by running python main.py --host 127.0.0.1 command in the terminal and close the old one. Then run this on the browser.
+```
 
-http://127.0.0.1:8000/
+## Fix:
 
-It'll show something like this: {"status":"ok","message":"Kiro Gateway is running","version":"2.0-rc.1"} so it means that server is running successfully in the localhost.
+Stop server and run:
 
-You should stopped this server once checked it's working or The server must stay running.
+```bash
+python3 main.py --host 127.0.0.1
+```
 
+Then open:
 
+```
+http://127.0.0.1:8000
+```
 
+Expected response:
+
+```json
+{"status":"ok","message":"Kiro Gateway is running","version":"2.0-rc.1"}
+```
+
+✅ This means the server is working.
+
+---
+
+# 🛑 Should You Stop the Server?
+
+* ✅ For testing → You can stop it
+* 🚀 For real usage → Server must stay running
+
+---
+
+# ✅ Done!
+
+You now have:
+
+* Kiro Gateway running locally
+* Claude Router configured
+* Local AI routing ready 🎉
+
+---
+
+If you want, I can also generate:
+
+* YouTube version
+* Urdu version
+* PDF version
+* Troubleshooting guide
