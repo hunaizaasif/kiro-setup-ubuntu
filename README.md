@@ -218,9 +218,3 @@ You now have:
 
 ---
 
-If you want, I can also generate:
-
-* YouTube version
-* Urdu version
-* PDF version
-* Troubleshooting guide
